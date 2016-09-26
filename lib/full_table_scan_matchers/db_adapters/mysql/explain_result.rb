@@ -28,7 +28,8 @@ module FullTableScanMatchers
 
         def explain_rows
           @explain_rows ||= explained_result
-            .reject { |row| row =~ /^\s+\+/ }
+            .reject { |row| row =~ /^\s*\+/ }        # Reject table frames, like: +----+-------------+
+            .reject { |row| row =~ / rows? in set/ } # Reject "1 row in set" type things after result
             .map    { |row| row.split("|").map(&:strip).reject &:blank? }
         end
 
