@@ -7,8 +7,8 @@ Detect full table scans in your unit tests!  As opposed to just doing basic rege
 ## Requirements/Support
 
 - Ruby 2.0+
-- ActiveRecord 3+
-- ActiveSupport 3+
+- ActiveRecord 4+
+- ActiveSupport 4+
 - mysql2 adapter
 
 ## Installation

@@ -10,7 +10,6 @@ rvm:
   - 2.3.0
   - 2.3.1
 env:
-  - RAILS_VERSION=3
   - RAILS_VERSION=4
   - RAILS_VERSION=5
 matrix:
