@@ -1,23 +1,31 @@
-require "bundler/gem_tasks"
-require "rspec/core/rake_task"
+require 'bundler/gem_tasks'
+require 'rspec/core/rake_task'
 
 RSpec::Core::RakeTask.new(:spec)
 
 task default: :spec
 
+require 'active_record'
+require 'yaml'
+
 namespace :db do
-  desc "Create test database"
-  task :create_test do
-    require 'mysql2'
+  db_config       = YAML::load(File.open('config/database.yml'))['test']
+  db_config_admin = db_config.merge('database' => 'mysql')
 
-    @db_host = "localhost"
-    @db_user = "root"
-    @db_pass = ""
-    @db_name = "full_table_scan_matchers_test"
-
-    client = Mysql2::Client.new(host: @db_host, username: @db_user, password: @db_pass)
-    client.query("DROP DATABASE IF EXISTS #{@db_name}")
-    client.query("CREATE DATABASE #{@db_name}")
-    client.close
+  desc "Create the database"
+  task :create do
+    ActiveRecord::Base.establish_connection(db_config_admin)
+    ActiveRecord::Base.connection.create_database(db_config["database"])
+    puts "Database created."
   end
+
+  desc "Drop the database"
+  task :drop do
+    ActiveRecord::Base.establish_connection(db_config_admin)
+    ActiveRecord::Base.connection.drop_database(db_config["database"])
+    puts "Database deleted."
+  end
+
+  desc "Reset the database"
+  task reset: [:drop, :create]
 end

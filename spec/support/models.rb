@@ -1,10 +1,7 @@
-ActiveRecord::Base.establish_connection(
-  adapter:   'mysql2',
-  database:  "full_table_scan_matchers_test",
-  host:      "localhost",
-  username:  "root",
-  password:  ""
-)
+require 'yaml'
+
+db_config = YAML::load(File.open('config/database.yml'))['test']
+ActiveRecord::Base.establish_connection(db_config)
 
 ActiveRecord::Schema.define do
   self.verbose = false
