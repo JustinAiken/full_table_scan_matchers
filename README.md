@@ -1,3 +1,5 @@
+[![Build Status](http://img.shields.io/travis/JustinAiken/full_table_scan_matchers/master.svg)](http://travis-ci.org/JustinAiken/full_table_scan_matchers)
+
 # full_table_scan_matchers
 
 Detect full table scans
