@@ -1,11 +1,12 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-require 'full_table_scan_matchers'
 require 'mysql2'
 
 unless ENV["NO_COVERALLS"]
   require 'coveralls'
   Coveralls.wear!
 end
+
+require 'full_table_scan_matchers'
 
 Dir[File.dirname(__FILE__) + '/support/**/*.rb'].each { |f| require f }
 
