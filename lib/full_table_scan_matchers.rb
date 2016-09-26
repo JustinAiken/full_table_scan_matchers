@@ -1,5 +1,31 @@
-require "full_table_scan_matchers/version"
+require 'full_table_scan_matchers/version'
+require 'full_table_scan_matchers/configuration'
 
+# Main module that holds global configuration.
 module FullTableScanMatchers
-  # Your code goes here...
+  class << self
+    attr_writer :configuration
+  end
+
+  # Gets the current configuration
+  # @return [FullTableScanMatchers::Configuration] the active configuration
+  def self.configuration
+    @configuration ||= Configuration.new
+  end
+
+  # Resets the current configuration.
+  # @return [FullTableScanMatchers::Configuration] the active configuration
+  def self.reset_configuration
+    @configuration = Configuration.new
+  end
+
+  # Updates the current configuration.
+  # @example
+  #   FullTableScanMatchers.configure do |config|
+  #     config.ignores = [/SELECT.*FROM.*users/]
+  #   end
+  #
+  def self.configure
+    yield configuration
+  end
 end
