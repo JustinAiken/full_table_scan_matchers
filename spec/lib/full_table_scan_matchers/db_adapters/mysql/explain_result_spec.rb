@@ -13,6 +13,7 @@ describe FullTableScanMatchers::DBAdapters::MySql::ExplainResult  do
         +----+-------------+-------+------+------------------------+------------------------+---------+-------+------+-------------+
         |  1 | SIMPLE      | posts | ref  | index_posts_on_user_id | index_posts_on_user_id | 5       | const |    1 | Using where |
         +----+-------------+-------+------+------------------------+------------------------+---------+-------+------+-------------+
+        1 row in set (0.00 sec)
       TEXT
     end
 
@@ -40,6 +41,7 @@ describe FullTableScanMatchers::DBAdapters::MySql::ExplainResult  do
         +----+-------------+-------+------+---------------+------+---------+------+------+-------------+
         |  1 | SIMPLE      | posts | ALL  | NULL          | NULL | NULL    | NULL | 1    | Using where |
         +----+-------------+-------+------+---------------+------+---------+------+------+-------------+
+        1 row in set (0.00 sec)
       TEXT
     end
 
@@ -70,6 +72,7 @@ describe FullTableScanMatchers::DBAdapters::MySql::ExplainResult  do
         |  1 | PRIMARY            | users | eq_ref | PRIMARY                                      | PRIMARY                | 4       | some_db.foos.user_id       |    1 | Using where                                  |
         |  2 | DEPENDENT SUBQUERY | bizs  | ref    | some_index,index_bizs_on_user_id             | some_index             | 10      | const,some_db.bars.user_id |    1 | Using index                                  |
         +----+--------------------+-------+--------+----------------------------------------------+------------------------+---------+----------------------------+------+----------------------------------------------+
+        4 rows in set (0.00 sec)
       TEXT
     end
 
