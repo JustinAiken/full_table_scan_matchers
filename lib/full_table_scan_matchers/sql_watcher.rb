@@ -1,10 +1,9 @@
 module FullTableScanMatchers
   class SQLWatcher
-    attr_reader :count, :log
+    attr_reader :log
 
-    def initialize(options = {})
-      @count   = 0
-      @log     = []
+    def initialize
+      @log = []
     end
 
     # Turns a SQLWatcher instance into a lambda. Designed to be used when
@@ -31,8 +30,11 @@ module FullTableScanMatchers
       return unless sql_statement =~ /SELECT /   # Only selects for now
       return if     any_match? ignores, sql_statement
 
-      @count += 1
       @log << sql_statement.strip
+    end
+
+    def count
+      log.count
     end
 
   private
