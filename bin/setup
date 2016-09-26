@@ -4,5 +4,5 @@ IFS=$'\n\t'
 set -vx
 
 bundle install
-rake db:drop
-rake db:create
+bundle exec rake db:drop
+bundle exec rake db:create
