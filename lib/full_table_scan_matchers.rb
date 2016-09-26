@@ -1,6 +1,7 @@
 require 'full_table_scan_matchers/version'
 require 'full_table_scan_matchers/db_adapters'
 require 'full_table_scan_matchers/db_adapters/mysql'
+require 'full_table_scan_matchers/sql_watcher'
 require 'full_table_scan_matchers/configuration'
 
 # Main module that holds global configuration.
