@@ -1,4 +1,4 @@
-[![Build Status](http://img.shields.io/travis/JustinAiken/full_table_scan_matchers/master.svg)](http://travis-ci.org/JustinAiken/full_table_scan_matchers)
+[![Build Status](http://img.shields.io/travis/JustinAiken/full_table_scan_matchers/master.svg)](http://travis-ci.org/JustinAiken/full_table_scan_matchers)[![Coveralls branch](http://img.shields.io/coveralls/JustinAiken/full_table_scan_matchers/master.svg)](https://coveralls.io/r/JustinAiken/full_table_scan_matchers?branch=master)
 
 # full_table_scan_matchers
 
@@ -19,8 +19,7 @@ After checking out the repo, run `bin/setup` to install dependencies. Then, run 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/full_table_scan_matchers.
-
+Bug reports and pull requests are welcome on GitHub at https://github.com/JustinAiken/full_table_scan_matchers.
 
 ## License
 
