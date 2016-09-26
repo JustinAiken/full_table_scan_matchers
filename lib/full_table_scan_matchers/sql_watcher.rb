@@ -1,9 +1,10 @@
 module FullTableScanMatchers
   class SQLWatcher
-    attr_reader :log
+    attr_reader :log, :options
 
-    def initialize
-      @log = []
+    def initialize(options = {})
+      @log     = []
+      @options = options
     end
 
     # Turns a SQLWatcher instance into a lambda. Designed to be used when
@@ -21,7 +22,7 @@ module FullTableScanMatchers
     # @param _start      [Time]   when the instrumented block started execution
     # @param _finish     [Time]   when the instrumented block ended execution
     # @param _message_id [String] unique ID for this notification
-    # @param payload    [Hash]   the payload
+    # @param payload     [Hash]   the payload
     #
     def callback(_name, _start,  _finish, _message_id, payload)
       sql_statement = payload[:sql]
@@ -29,6 +30,7 @@ module FullTableScanMatchers
       return if     sql_statement =~ /EXPLAIN /i # That's from us, don't EXPLAIN the EXPLAINS!
       return unless sql_statement =~ /SELECT /   # Only selects for now
       return if     any_match? ignores, sql_statement
+      return unless any_match? tables,  sql_statement if options[:tables]
 
       @log << sql_statement.strip
     end
@@ -38,6 +40,10 @@ module FullTableScanMatchers
     end
 
   private
+
+    def tables
+      Array(options[:tables]).map { |table_name| /FROM\s+`?#{table_name.to_s}`?/i }
+    end
 
     def ignores
       FullTableScanMatchers.configuration.ignores

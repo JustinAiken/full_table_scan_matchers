@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 describe FullTableScanMatchers::SQLWatcher do
-  let(:watcher) { described_class.new }
+  let(:watcher) { described_class.new options }
+  let(:options) { {} }
 
   describe "#callback" do
     let(:make_callback) { watcher.callback :foo, :bar, :biz, :baz, {sql: sql} }
@@ -17,6 +18,24 @@ describe FullTableScanMatchers::SQLWatcher do
       it "logs the statement" do
         make_callback
         expect(last_logged).to eq sql
+      end
+
+      context "that doesn't match the tables option" do
+        let(:options) { {tables: :posts} }
+
+        it "doesn't change anything" do
+          expect { make_callback }.not_to change { watcher.count }
+          expect(last_logged).to be_nil
+        end
+      end
+
+      context "that does match the tables option" do
+        let(:options) { {tables: :users} }
+
+        it "does log" do
+          expect { make_callback }.to change { watcher.count }.by 1
+          expect(last_logged).to eq "SELECT * FROM users"
+        end
       end
     end
 
