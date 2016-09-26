@@ -47,7 +47,7 @@ RSpec::Matchers.define :full_table_scan do |options = {}|
 
   def replay_logged_with_explain!
     @watcher.log
-      .map!    { |logged| FullTableScanMatchers.configuration.adapter::ExplainResult.new(logged[:sql], backtrace: logged[:backtrace]) }
+      .map!    { |logged| FullTableScanMatchers.configuration.adapter::ExplainResult.new(logged[:sql], backtrace: logged[:backtrace], tables: @tables) }
       .reject! { |logged| !logged.full_table_scan? }
   end
 

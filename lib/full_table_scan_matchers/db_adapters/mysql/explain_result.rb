@@ -4,11 +4,12 @@ module FullTableScanMatchers
   module DBAdapters
     module MySql
       class ExplainResult
-        attr_accessor :sql_statement, :structs, :backtrace
+        attr_accessor :sql_statement, :structs, :backtrace, :tables
 
-        def initialize(sql_statement, backtrace: nil)
+        def initialize(sql_statement, backtrace: nil, tables: nil)
           @sql_statement = sql_statement
           @backtrace     = backtrace
+          @tables        = tables
         end
 
         def full_table_scan?
@@ -35,6 +36,7 @@ module FullTableScanMatchers
         def offending_structs
           structs
             .reject  { |struct| struct.table == "NULL" }
+            .select  { |struct| tables.nil? || Array(tables).map(&:to_s).include?(struct.table) }
             .select  { |struct| struct.key == "NULL" && struct.possible_keys == "NULL" }
         end
 

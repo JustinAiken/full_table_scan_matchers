@@ -26,7 +26,6 @@ module FullTableScanMatchers
     #
     def callback(_name, _start,  _finish, _message_id, payload)
       sql_statement = payload[:sql]
-
       return if     sql_statement =~ /EXPLAIN /i # That's from us, don't EXPLAIN the EXPLAINS!
       return unless sql_statement =~ /SELECT /   # Only selects for now
       return if     any_match? ignores, sql_statement
@@ -50,7 +49,7 @@ module FullTableScanMatchers
   private
 
     def tables
-      Array(options[:tables]).map { |table_name| /FROM\s+`?#{table_name.to_s}`?/i }
+      Array(options[:tables]).map { |table_name| /(FROM|JOIN)\s+`?#{table_name.to_s}`?/i }
     end
 
     def ignores
