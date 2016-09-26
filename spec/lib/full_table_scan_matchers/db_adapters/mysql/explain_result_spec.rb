@@ -3,7 +3,8 @@ require 'spec_helper'
 describe FullTableScanMatchers::DBAdapters::MySql::ExplainResult  do
   let(:connection) { double ActiveRecord::ConnectionAdapters::AbstractAdapter, explain: explain_table }
   before           { allow(ActiveRecord::Base).to receive(:connection).and_return connection }
-  subject(:result) { described_class.new explain_table }
+  let(:sql)        { "SELECT * FROM posts WHERE posts.user_id = ?" }
+  subject(:result) { described_class.new sql }
 
   describe "example using an index" do
     let(:explain_table) do
@@ -31,6 +32,13 @@ describe FullTableScanMatchers::DBAdapters::MySql::ExplainResult  do
     end
 
     it { should_not be_full_table_scan }
+
+    it "can spit itself out as a string" do
+      expect(result.to_s).to eq <<-STRING.strip
+SQL:  SELECT * FROM posts WHERE posts.user_id = ?
+INFO: id: 1, select_type: SIMPLE, table: posts, type: ref, possible_keys: index_posts_on_user_id, key: index_posts_on_user_id, key_len: 5, ref: const, rows: 1, extra: Using where
+STRING
+    end
   end
 
   describe "example not using an index" do
@@ -59,6 +67,13 @@ describe FullTableScanMatchers::DBAdapters::MySql::ExplainResult  do
     end
 
     it { should be_full_table_scan }
+
+    it "can spit itself out as a string" do
+      expect(result.to_s).to eq <<-STRING.strip
+SQL:  SELECT * FROM posts WHERE posts.user_id = ?
+FAIL: id: 1, select_type: SIMPLE, table: posts, type: ALL, possible_keys: NULL, key: NULL, key_len: NULL, ref: NULL, rows: 1, extra: Using where
+STRING
+    end
   end
 
   describe "with a complex query" do
@@ -123,5 +138,15 @@ describe FullTableScanMatchers::DBAdapters::MySql::ExplainResult  do
     end
 
     it { should_not be_full_table_scan }
+
+    it "can spit itself out as a string" do
+      expect(result.to_s).to eq <<-STRING.strip
+SQL:  SELECT * FROM posts WHERE posts.user_id = ?
+INFO: id: 1, select_type: PRIMARY, table: foos, type: ref, possible_keys: index_foos_on_posts_id,index_foos_on_user_id, key: index_foos_on_posts_id, key_len: 5, ref: const, rows: 1, extra: Using where; Using temporary; Using filesort
+INFO: id: 1, select_type: PRIMARY, table: bars, type: ref, possible_keys: index_bars_on_user_id, key: index_bars_on_user_id, key_len: 5, ref: some_db.foos.user_id, rows: 1, extra: Using where
+INFO: id: 1, select_type: PRIMARY, table: users, type: eq_ref, possible_keys: PRIMARY, key: PRIMARY, key_len: 4, ref: some_db.foos.user_id, rows: 1, extra: Using where
+INFO: id: 2, select_type: DEPENDENT SUBQUERY, table: bizs, type: ref, possible_keys: some_index,index_bizs_on_user_id, key: some_index, key_len: 10, ref: const,some_db.bars.user_id, rows: 1, extra: Using index
+STRING
+    end
   end
 end

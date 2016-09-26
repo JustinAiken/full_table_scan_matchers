@@ -10,16 +10,31 @@ module FullTableScanMatchers
           @sql_statement = sql_statement
         end
 
-        # TODO - Make this much more clever:
         def full_table_scan?
-          structs.any? { |struct| struct.key == "NULL" && struct.possible_keys == "NULL" }
+          offending_structs.any?
         end
 
         def structs
           @structs ||= as_hashes.map { |hash| OpenStruct.new hash }
         end
 
+        def to_s
+          [
+            "SQL:  #{sql_statement}",
+            structs.map do |struct|
+              (offending_structs.include?(struct) ? "FAIL: " : "INFO: ") +
+              struct.to_h.map { |k, v| "#{k}: #{v}" }.join(", ")
+            end
+          ].flatten.join "\n"
+        end
+
       private
+
+        def offending_structs
+          structs
+            .reject  { |struct| struct.table == "NULL" }
+            .select  { |struct| struct.key == "NULL" && struct.possible_keys == "NULL" }
+        end
 
         def as_hashes
           keys = explain_rows.shift.map(&:downcase)
