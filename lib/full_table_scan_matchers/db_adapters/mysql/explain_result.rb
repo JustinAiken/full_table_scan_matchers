@@ -4,10 +4,11 @@ module FullTableScanMatchers
   module DBAdapters
     module MySql
       class ExplainResult
-        attr_accessor :sql_statement, :structs
+        attr_accessor :sql_statement, :structs, :backtrace
 
-        def initialize(sql_statement)
+        def initialize(sql_statement, backtrace: nil)
           @sql_statement = sql_statement
+          @backtrace     = backtrace
         end
 
         def full_table_scan?
@@ -24,8 +25,9 @@ module FullTableScanMatchers
             structs.map do |struct|
               (offending_structs.include?(struct) ? "FAIL: " : "INFO: ") +
               struct.to_h.map { |k, v| "#{k}: #{v}" }.join(", ")
-            end
-          ].flatten.join "\n"
+            end,
+            (backtrace.present? ? "BACKTRACE: #{backtrace}" : nil)
+          ].flatten.compact.join "\n"
         end
 
       private

@@ -32,7 +32,15 @@ module FullTableScanMatchers
       return if     any_match? ignores, sql_statement
       return unless any_match? tables,  sql_statement if options[:tables]
 
-      @log << sql_statement.strip
+      backtrace = if FullTableScanMatchers.configuration.log_backtrace
+        raw_backtrace      = caller
+        filtered_backtrace = FullTableScanMatchers.configuration.backtrace_filter.call(raw_backtrace)
+        "#{filtered_backtrace.join("\n")}\n"
+      else
+        nil
+      end
+
+      @log << {sql: sql_statement.strip, backtrace: backtrace}
     end
 
     def count
