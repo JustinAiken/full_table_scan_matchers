@@ -1,0 +1,204 @@
+AllCops:
+  DisabledByDefault: true
+  DisplayCopNames:   true
+  DisplayStyleGuide: true
+  TargetRubyVersion: 2.3
+
+# ------------------------------------ Lints ---------------------------------------------
+Lint/CircularArgumentReference:
+  Enabled: true
+
+Lint/ConditionPosition:
+  Description: Checks for condition placed in a confusing position relative to the keyword.
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#same-line-condition'
+  Enabled: true
+
+Lint/Debugger:
+  Description: 'Check for `debugger` or `binding.pry` statements left in.'
+  Enabled: true
+
+Lint/DefEndAlignment:
+  Description: "Makes sure def/ends line up"
+  Enabled: true
+
+Lint/DeprecatedClassMethods:
+  Description: 'Check for deprecated class method calls.'
+  Enabled: true
+
+Lint/DuplicatedKey:
+  Description: 'Check for duplicate keys in hash literals.'
+  Enabled: true
+
+Lint/DuplicateMethods:
+  Description: 'Check for duplicate method definitions.'
+  Enabled: true
+
+Lint/EachWithObjectArgument:
+  Description: 'Check for immutable argument given to each_with_object.'
+  Enabled: true
+
+Lint/ElseLayout:
+  Description: 'Check for odd code arrangement in an else block.'
+  Enabled: true
+
+Lint/EmptyEnsure:
+  Description: 'Checks for empty ensure block.'
+  Enabled: true
+
+Lint/EmptyInterpolation:
+  Description: 'Checks for empty string interpolation.'
+  Enabled: true
+
+Lint/EndInMethod:
+  Description: 'END blocks should not be placed inside method definitions.'
+  Enabled: true
+
+Lint/EnsureReturn:
+  Description: 'Do not use return in an ensure block.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-return-ensure'
+  Enabled: true
+
+Lint/FloatOutOfRange:
+  Description: Catches floating-point literals too large or small for Ruby to represent.
+  Enabled: true
+
+Lint/FormatParameterMismatch:
+  Description: 'The number of parameters to format/sprint must match the fields.'
+  Enabled: true
+
+Lint/ImplicitStringConcatenation:
+  Description: Checks for adjacent string literals on the same line, which could better be represented as a single string literal.
+  Enabled: true
+
+Lint/IneffectiveAccessModifier:
+  Description: Checks for attempts to use `private` or `protected` to set the visibility of a class method, which does not work.
+  Enabled: true
+
+Lint/InheritException:
+  Description: 'Avoid inheriting from the `Exception` class.'
+  Enabled: true
+
+Lint/InvalidCharacterLiteral:
+  Description: Checks for invalid character literals with a non-escaped whitespace character.
+  Enabled: true
+
+Lint/LiteralInInterpolation:
+  Description: 'Checks for literals used in interpolation.'
+  Enabled: true
+
+Lint/NestedMethodDefinition:
+  Description: 'Do not use nested method definitions.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-nested-methods'
+  Enabled: true
+
+Lint/NextWithoutAccumulator:
+  Description: Do not omit the accumulator when calling `next` in a `reduce`/`inject` block.
+  Enabled: true
+
+Lint/PercentStringArray:
+  Description: "Checks for unwanted commas and quotes in %w/%W literals."
+  Enabled: true
+
+Lint/PercentSymbolArray:
+  Description: "Checks for unwanted commas and colons in %i/%I literals."
+  Enabled: true
+
+Lint/RandOne:
+  Description: Checks for `rand(1)` calls. Such calls always return `0` and most likely a mistake.
+  Enabled: true
+
+Lint/ShadowedException:
+  Description:  Avoid rescuing a higher level exception before a lower level exception.
+  Enabled: true
+
+Lint/ShadowingOuterLocalVariable:
+  Description: Do not use the same name as outer local variable for block arguments or block local variables.
+  Enabled: true
+
+Lint/StringConversionInInterpolation:
+  Description: 'Checks for Object#to_s usage in string interpolation.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-to-s'
+  Enabled: true
+
+Lint/UnneededDisable:
+  Description: >-
+                 Checks for rubocop:disable comments that can be removed.
+                 Note: this cop is not disabled when disabling all cops.
+                 It must be explicitly disabled.
+  Enabled: true
+
+Lint/UnreachableCode:
+  Description: 'Unreachable code.'
+  Enabled: true
+
+Lint/UnusedBlockArgument:
+  Description: 'Checks for unused block arguments.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#underscore-unused-vars'
+  Enabled: true
+
+Lint/UnusedMethodArgument:
+  Description: 'Checks for unused method arguments.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#underscore-unused-vars'
+  Enabled: true
+
+Lint/UselessAccessModifier:
+  Description: 'Checks for useless access modifiers.'
+  Enabled: true
+
+Lint/UselessAssignment:
+  Description: 'Checks for useless assignment to a local variable.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#underscore-unused-vars'
+  Enabled: true
+  # This is done in our tests a lot for clarity
+  Exclude:
+    - spec/**/*.rb
+
+Lint/UselessComparison:
+  Description: 'Checks for comparison of something with itself.'
+  Enabled: true
+
+Lint/UselessElseWithoutRescue:
+  Description: 'Checks for useless `else` in `begin..end` without `rescue`.'
+  Enabled: true
+
+Lint/UselessSetterCall:
+  Description: 'Checks for useless setter call to a local variable.'
+  Enabled: true
+
+Rails/Output:
+  Description: 'Checks for calls to puts, print, etc.'
+  Enabled: true
+
+Rails/PluralizationGrammar:
+  Description: 'Checks for incorrect grammar when using methods like `3.day.ago`.'
+  Enabled: true
+
+Rails/ScopeArgs:
+  Description: 'Checks the arguments of ActiveRecord scopes.'
+  Enabled: true
+
+Rails/TimeZone:
+  Description: 'Checks the correct usage of time zone aware methods.'
+  StyleGuide: 'https://github.com/bbatsov/rails-style-guide#time'
+  Reference: 'http://danilenko.org/2012/7/6/rails_timezones'
+  Enabled: true
+
+Rails/UniqBeforePluck:
+  Description: 'Prefer the use of uniq or distinct before pluck.'
+  Enabled: true
+
+Style/FileName:
+  Enabled: true
+  ExpectMatchingDefinition: false
+  IgnoreExecutableScripts: true
+
+Style/MethodName:
+  Enabled: true
+  EnforcedStyle: snake_case
+
+Style/TrailingBlankLines:
+  Enabled: true
+  EnforcedStyle: final_newline
+
+Style/TrailingWhitespace:
+  Enabled: true
