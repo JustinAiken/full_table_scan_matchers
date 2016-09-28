@@ -1,4 +1,4 @@
-[![Gem Version](http://img.shields.io/gem/v/full_table_scan_matchers.svg)](https://rubygems.org/gems/full_table_scan_matchers)[![Build Status](http://img.shields.io/travis/JustinAiken/full_table_scan_matchers/master.svg)](http://travis-ci.org/JustinAiken/full_table_scan_matchers)[![Coveralls branch](http://img.shields.io/coveralls/JustinAiken/full_table_scan_matchers/master.svg)](https://coveralls.io/r/JustinAiken/full_table_scan_matchers?branch=master)
+[![Gem Version](http://img.shields.io/gem/v/full_table_scan_matchers.svg)](https://rubygems.org/gems/full_table_scan_matchers)[![Build Status](http://img.shields.io/travis/JustinAiken/full_table_scan_matchers/master.svg)](http://travis-ci.org/JustinAiken/full_table_scan_matchers)[![Coveralls branch](http://img.shields.io/coveralls/JustinAiken/full_table_scan_matchers/master.svg)](https://coveralls.io/r/JustinAiken/full_table_scan_matchers?branch=master)[![Code Climate](http://img.shields.io/codeclimate/github/JustinAiken/full_table_scan_matchers.svg)](https://codeclimate.com/github/JustinAiken/full_table_scan_matchers)
 
 # full_table_scan_matchers
 
